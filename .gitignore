@@ -1,0 +1,8 @@
+node_modules/
+slides/
+slides/_draft/
+presentation*.pptx
+~$*.pptx
+templates/extracted/
+__pycache__/
+*.hwp
