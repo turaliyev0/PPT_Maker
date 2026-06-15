@@ -1,0 +1,8 @@
+# HWP extraction
+hwp5
+
+# PDF extraction (when input is .pdf)
+pymupdf
+
+# Image sizing / validation
+Pillow

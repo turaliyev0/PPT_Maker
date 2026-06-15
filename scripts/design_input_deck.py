@@ -123,9 +123,10 @@ def slide_background_goals(d: dict) -> str:
         for i, g in enumerate(d["goals"][:5], 1)
     )
     perf = "".join(
-        f'<div class="pm"><div class="pv">{e(r[2])}</div><div class="pl">{e(r[0])}</div><div class="pu">{e(r[1])}</div></div>'
+        f'<div class="pm"><div class="pv">{e(r[2])}</div><div class="pl">{e(r[0])}</div>'
+        f'<div class="pu">{e(r[3] if len(r) > 3 else r[1])}</div></div>'
         for r in d["performance"][:4]
-        if r[0] and not r[0].startswith(".")
+        if r[0] and not r[0].startswith(".") and not r[0][0].isdigit()
     )
     css = """
 .wrap { display: grid; grid-template-rows: auto 1fr auto; height: 720px; }

@@ -30,7 +30,7 @@ HTML-first is required (1280×720 inline CSS) before PPTX. No direct python-pptx
 
 1. **Facts from HWP only** — do not invent names, patents, stats, orgs, or photos
 2. **1280×720 HTML** before conversion
-3. **Images from HWP bindata only** — and follow `references/figures.md`: view every image first, assign by relevance (never keyword match), size containers to the image's aspect ratio, `object-fit: contain` for charts/diagrams, and run the rendered-output image QA before delivering. A mismatched, cropped, or floating image is a hard failure.
+3. **Images:** bindata from HWP/PDF only (`references/figures.md`). If no relevant bindata for a slide, merge the slide content elsewhere or redesign without a photo — never ship large blank areas
 4. **Important information only** — cut repetition; merge related sections. Target **12–18 slides** for a typical R&D HWP (not 30+)
 5. **No empty-looking slides** — if a slide feels sparse, **redesign** it (bigger type, cards, diagram, stat row) or **remove** it and fold the facts into another slide
 6. **No boxed-section scaffold** — never gray page + multiple outlined white panels + accent-bar headings. White canvas, one focal element, ≤ 1 tinted surface per slide, architectures rotated per `references/html-slides.md`.
@@ -79,6 +79,8 @@ Read `templates/extracted/{stem}-hwp-from-html-parsed.json` → `slide_plan`, `m
 ### Step 3 — Design HTML (you lead)
 
 **Before designing: complete Step A of `references/figures.md`** (view all bindata images, record dimensions/aspect/content class, build the figure→slide table).
+
+**Image gaps:** for slides with no matching bindata, merge sparse slides or redesign as text/stat layout — do not leave empty image wells.
 
 **Option A (preferred):** Read parsed JSON + figures and write each `slides/{num}-{kind}-*.html` yourself with distinct, polished CSS.
 
@@ -161,6 +163,7 @@ Kind suggests content — **not** a fixed layout. Break the pattern when it look
 | `extract_hwp_text.py` | HWP → text + images |
 | `parse_hwp.py` | text → `slide_plan` JSON |
 | `build_html_from_plan.py` | Optional content scaffold — **not final design** |
+| `slide_images.py` | Bindata image resolver |
 | `html_to_pptx.mjs` | HTML → PPTX |
 
 ---

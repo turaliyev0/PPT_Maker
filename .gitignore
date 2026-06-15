@@ -4,5 +4,6 @@ slides/_draft/
 presentation*.pptx
 ~$*.pptx
 templates/extracted/
+qa/
 __pycache__/
 *.hwp

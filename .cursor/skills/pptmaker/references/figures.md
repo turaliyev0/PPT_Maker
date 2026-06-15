@@ -17,6 +17,8 @@ Before writing any slide HTML:
 
 Hard mismatches to reject: market/industry charts on 책임자 역량 slides, generic campus/building photos on 사업화 slides, robot statistics on slides about cooling systems. If the caption topic ≠ slide topic, it does not go on the slide.
 
+**No bindata match?** Merge the slide content elsewhere or redesign without a photo — do not leave a text-only slide with large empty margins.
+
 ## Step B — Sizing rules (aspect ratio drives the layout)
 
 **The container adapts to the image — never the reverse.**
