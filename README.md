@@ -38,7 +38,7 @@ The agent reads `WORKFLOW.md` and executes every step autonomously — no manual
 |------|---------|---------|
 | Python | 3.8+ | [python.org](https://www.python.org/downloads/) |
 | Node.js | 18+ | [nodejs.org](https://nodejs.org) |
-| AI agent | any (Claude, GPT, Gemini, Cursor, etc.) | — |
+| AI agent | Cursor, Claude Code, Windsurf, or any agentic coding assistant | — |
 
 ---
 
@@ -63,7 +63,7 @@ npm install
 ### Basic
 
 1. Copy your HWP file into the project root (any name, e.g. `input.hwp`)
-2. Open the project in your AI agent or IDE
+2. Open the project folder in **Cursor**, **Claude Code**, **Windsurf**, or any agentic coding assistant
 3. Provide the HWP file and say:
 
    > *"Read WORKFLOW.md and create the presentation from input.hwp"*
@@ -134,7 +134,7 @@ PptMaker/
 ├── slides/                      # designed HTML slides (output)
 │
 ├── WORKFLOW.md                  # full agent workflow & design rules
-├── AGENTS.md                    # Cursor/agent bootstrap rule
+├── AGENTS.md                    # agent bootstrap rule
 ├── requirements.txt
 └── package.json
 ```
