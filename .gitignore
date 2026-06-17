@@ -1,9 +1,21 @@
+# ── Dependencies ───────────────────────────────────────────────
 node_modules/
-slides/
-slides/_draft/
-presentation*.pptx
-~$*.pptx
-templates/extracted/
-qa/
+
+# ── Python cache ────────────────────────────────────────────────
 __pycache__/
-*.hwp
+*.pyc
+*.pyo
+
+# ── Generated / intermediate artifacts ─────────────────────────
+# Extracted HWP content (rebuilt on every run)
+templates/extracted/
+
+# Visual QA screenshots (temporary, rebuilt on demand)
+qa/
+
+# Temporary Office lock files
+~$*.pptx
+~$*.hwp
+
+# ── Filtered-out source images (auto-sorted by extract script) ──
+presentation_1-images/_removed/
