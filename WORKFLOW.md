@@ -123,9 +123,9 @@ Before designing, build a complete picture of every image available. Check **bot
 
 Record each image: path · dimensions · aspect ratio · content class (diagram / portrait / cert-doc / award / logo).
 
-#### B. User-provided images
+#### B. User-provided images (`preloadable_images/`)
 
-If the user has placed images in a folder (e.g., `presentation_1-images/`), scan them **before designing**:
+The project has a dedicated **`preloadable_images/`** folder for user-supplied images. Scan it **before designing**. Also check any other image folder the user mentions (e.g., `presentation_1-images/`).
 
 | Image type found | How to use |
 |-----------------|-----------|

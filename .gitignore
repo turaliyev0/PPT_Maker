@@ -19,3 +19,7 @@ qa/
 
 # ── Filtered-out source images (auto-sorted by extract script) ──
 presentation_1-images/_removed/
+
+# ── User-provided images (contents gitignored; folder tracked via README) ──
+preloadable_images/*
+!preloadable_images/README.md

@@ -2,7 +2,7 @@
 
 **AI-powered Korean R&D HWP → polished PPTX presentation.**
 
-Attach a `.hwp` file to the Cursor AI agent and it handles everything: extracting text and embedded images, designing visually strong HTML slides, and converting them to a ready-to-present `.pptx` file.
+Give an AI agent your `.hwp` file and it handles everything: pulling the latest workflow, extracting text and embedded images, designing visually strong HTML slides, and converting them to a ready-to-present `.pptx` file.
 
 ---
 
@@ -11,15 +11,24 @@ Attach a `.hwp` file to the Cursor AI agent and it handles everything: extractin
 ```
 input.hwp
     │
-    ├─ extract_hwp_text.py  ──► templates/extracted/   (text + bindata images)
-    ├─ parse_hwp.py          ──► slide_plan JSON
+    ├─ Step 0 ──► git pull (latest scripts from GitHub)
+    │             verify Python + dependencies
     │
-    ├─ AI designs slides     ──► slides/*.html          (1280×720, inline CSS)
+    ├─ Step 1 ──► extract_hwp_text.py + parse_hwp.py
+    │             → templates/extracted/  (text + bindata images + slide_plan JSON)
     │
-    └─ html_to_pptx.mjs      ──► presentation.pptx
+    ├─ Step 2 ──► inventory all images (bindata + user-provided)
+    │
+    ├─ Step 3 ──► plan slides (12–18, merged/trimmed)
+    │
+    ├─ Step 4 ──► AI designs slides/*.html  (1280×720, inline CSS)
+    │
+    ├─ Step 5 ──► html_to_pptx.mjs  → presentation.pptx
+    │
+    └─ Step 6 ──► image QA (screenshot, inspect, fix, reconvert)
 ```
 
-The agent reads the `.cursor/skills/pptmaker/SKILL.md` workflow and does every step autonomously — no manual commands needed.
+The agent reads `WORKFLOW.md` and executes every step autonomously — no manual commands needed.
 
 ---
 
@@ -27,23 +36,23 @@ The agent reads the `.cursor/skills/pptmaker/SKILL.md` workflow and does every s
 
 | Tool | Version | Install |
 |------|---------|---------|
-| Python | 3.9+ | [python.org](https://python.org) |
+| Python | 3.8+ | [python.org](https://www.python.org/downloads/) |
 | Node.js | 18+ | [nodejs.org](https://nodejs.org) |
-| Cursor IDE | latest | [cursor.com](https://cursor.com) |
+| AI agent | any (Claude, GPT, Gemini, Cursor, etc.) | — |
 
 ---
 
 ## Installation
 
 ```bash
-# 1. Clone the repo
-git clone https://github.com/your-username/PptMaker.git
-cd PptMaker
+# Clone the repo
+git clone https://github.com/turaliyev0/PPT_Maker.git
+cd PPT_Maker
 
-# 2. Install Python dependencies
+# Install Python dependencies
 pip install -r requirements.txt
 
-# 3. Install Node.js dependencies
+# Install Node.js dependencies
 npm install
 ```
 
@@ -53,32 +62,43 @@ npm install
 
 ### Basic
 
-1. Copy your HWP file into the project root and name it `input.hwp`
-2. Open the project in **Cursor**
-3. In the chat, attach `input.hwp` and say:
+1. Copy your HWP file into the project root (any name, e.g. `input.hwp`)
+2. Open the project in your AI agent or IDE
+3. Provide the HWP file and say:
 
-   > *"Read the skill and create the presentation from input.hwp"*
+   > *"Read WORKFLOW.md and create the presentation from input.hwp"*
 
 4. The agent runs the full pipeline and delivers `presentation.pptx`
 
 ### With reference images
 
-If you have existing presentation slides, professor portraits, or other reference images, put them in a folder (e.g., `presentation_1-images/`) and mention it in the chat:
+Drop any images into the **`preloadable_images/`** folder before running the agent — no need to mention them explicitly:
 
-> *"Use input.hwp and the images in @presentation_1-images as reference"*
+```
+preloadable_images/
+├── prof_kim.jpg          ← PI portrait
+├── award_2023.png        ← award certificate
+└── old_slide_ref.jpg     ← style reference
+```
 
-The agent will use:
-- **Professor portraits** → PI photo in capability slides
-- **Award/certificate images** → displayed as document thumbnails
-- **Previous slide screenshots** → style/color reference only
+The agent scans this folder automatically and incorporates relevant images:
+
+| Image type | How it's used |
+|------------|---------------|
+| Professor / PI portrait | PI photo in the matching capability slide |
+| Award certificate / 표창장 | Document thumbnail in the matching slide |
+| Previous slide screenshots | Style / color reference only |
+| High-res diagram or render | Preferred over a lower-res HWP bindata version |
+
+> Images are **not mandatory** — the agent only uses them where they fit. See `preloadable_images/README.md` for full guidance.
 
 ### Improving an existing deck
 
 After the initial delivery, provide feedback in plain language:
 
-> *"Page 5 has too much empty space. Page 8 images are too small. Add more details about the professors."*
+> *"Page 5 has too much empty space. Page 8 image is stretched. Add more professor details."*
 
-The agent will re-examine QA screenshots, fix the identified slides, and reconvert.
+The agent re-examines QA screenshots, fixes the identified slides, and reconverts.
 
 ---
 
@@ -86,8 +106,8 @@ The agent will re-examine QA screenshots, fix the identified slides, and reconve
 
 | File | Description |
 |------|-------------|
-| `presentation.pptx` | Final presentation (16:9, ready for PowerPoint / Keynote) |
-| `slides/*.html` | Individual slide previews (open in browser) |
+| `presentation.pptx` | Final deck (16:9, ready for PowerPoint / Keynote) |
+| `slides/*.html` | Individual slide previews (open in any browser) |
 | `slides/index.html` | Full deck thumbnail preview |
 
 ---
@@ -97,26 +117,26 @@ The agent will re-examine QA screenshots, fix the identified slides, and reconve
 ```
 PptMaker/
 ├── scripts/
-│   ├── extract_hwp_text.py    # HWP → text + embedded images
-│   ├── parse_hwp.py           # text → slide_plan JSON
-│   ├── build_html_from_plan.py # (optional) content scaffold
-│   ├── slide_images.py         # bindata image resolver
-│   └── html_to_pptx.mjs        # HTML slides → PPTX
+│   ├── extract_hwp_text.py      # HWP → text + embedded images
+│   ├── parse_hwp.py             # text → slide_plan JSON
+│   ├── build_html_from_plan.py  # (optional) content scaffold
+│   ├── slide_images.py          # bindata image resolver
+│   └── html_to_pptx.mjs         # HTML slides → PPTX
+│
+├── references/                  # design & pipeline guides (see below)
+│
+├── preloadable_images/          # ← drop your images here before running
+│   └── README.md                # usage guide for this folder
 │
 ├── templates/
-│   └── extracted/              # auto-generated, gitignored
+│   └── extracted/               # auto-generated, gitignored
 │
-├── slides/                     # designed HTML slides (tracked)
-├── presentation_1-images/      # user reference images (tracked)
+├── slides/                      # designed HTML slides (output)
 │
-├── .cursor/
-│   └── skills/pptmaker/
-│       ├── SKILL.md            # agent workflow & design rules
-│       └── references/         # design guides
-│
+├── WORKFLOW.md                  # full agent workflow & design rules
+├── AGENTS.md                    # Cursor/agent bootstrap rule
 ├── requirements.txt
-├── package.json
-└── input.hwp                   # your source document
+└── package.json
 ```
 
 ---
@@ -127,36 +147,52 @@ The agent's behavior is controlled by two files:
 
 | File | Purpose |
 |------|---------|
-| `AGENTS.md` | Top-level rule: attach `.hwp` → run workflow |
-| `.cursor/skills/pptmaker/SKILL.md` | Full workflow: steps, design rules, empty-space fixes, layout patterns |
+| `AGENTS.md` | Bootstrap rule: receive `.hwp` → run `WORKFLOW.md` |
+| `WORKFLOW.md` | Full workflow: steps, design rules, empty-space fixes, layout patterns |
 
-Edit `SKILL.md` to adjust slide count targets, color preferences, or add new layout patterns.
+Edit `WORKFLOW.md` to adjust slide count targets, color preferences, or add new layout patterns.
+
+---
+
+## References
+
+Detailed guides in `references/`:
+
+| File | Contents |
+|------|----------|
+| `references/figures.md` | Figure selection, aspect-ratio sizing, QA checklist |
+| `references/visual-design.md` | Design principles, anti-patterns |
+| `references/html-slides.md` | Canvas, typography, layout ideas |
+| `references/slide-structure.md` | R&D section skeleton |
+| `references/pipeline.md` | JSON fields, paths |
+| `references/html-to-pptx.md` | Conversion details |
 
 ---
 
 ## Python dependencies
 
 ```
-hwp5       # HWP file parsing
-pymupdf    # PDF fallback extraction
-Pillow     # Image sizing and validation
+olefile        # HWP binary parsing
+beautifulsoup4 # HTML parsing
+Pillow         # image sizing and validation
 ```
 
 ## Node.js dependencies
 
 ```
-pptxgenjs  # PPTX generation
-puppeteer  # Headless Chrome for HTML → image → PPTX
+pptxgenjs      # PPTX generation
+puppeteer      # headless Chrome for HTML → image → PPTX
 ```
 
 ---
 
 ## Notes
 
-- **Supported input:** `.hwp` (HWP 5.x), `.pdf` (limited, via `extract_pdf_images.py`)
+- **Supported input:** `.hwp` (HWP 5.x)
 - **Slide canvas:** 1280×720 px (16:9), rendered at 2× for crisp PPTX images
 - **Language:** optimized for Korean R&D proposals (과제 신청서, 사업계획서)
-- **Fonts:** Malgun Gothic / 맑은 고딕 (built-in on Windows); falls back to sans-serif on other platforms
+- **Fonts:** Malgun Gothic / 맑은 고딕 (built-in on Windows); falls back to sans-serif elsewhere
+- **Offline use:** if the GitHub pull in Step 0 fails, the agent continues with the local copy
 
 ---
 
