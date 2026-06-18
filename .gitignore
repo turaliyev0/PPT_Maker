@@ -10,8 +10,17 @@ __pycache__/
 # Extracted HWP content (rebuilt on every run)
 templates/extracted/
 
-# Visual QA screenshots (temporary, rebuilt on demand)
+# Pipeline outputs (rebuilt on every run)
+slides/
+presentation.pptx
+qa_screenshots/
+*.hwp
+
+# Visual QA screenshots (legacy path)
 qa/
+
+# Generated guide PDF (source: guide/guide.html)
+guide/guide.pdf
 
 # Temporary Office lock files
 ~$*.pptx

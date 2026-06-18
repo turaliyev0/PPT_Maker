@@ -57,8 +57,11 @@ See `references/visual-design.md` and `references/html-slides.md` for inspiratio
 The canonical workflow lives at `https://github.com/turaliyev0/PPT_Maker.git`. Always pull before starting so you work with the latest scripts, references, and `WORKFLOW.md`.
 
 ```bash
-# If the project folder is already a clone of PPT_Maker, just pull:
-git pull origin master
+# Always pull using the direct URL — do NOT rely on a named remote
+# (the remote may be named "origin", "orign", or anything else depending on the device)
+git pull https://github.com/turaliyev0/PPT_Maker.git main
+# if that fails, try master branch:
+git pull https://github.com/turaliyev0/PPT_Maker.git master
 
 # If the project folder is NOT a PPT_Maker clone (e.g. first-time setup),
 # clone into a sibling folder and copy scripts + references across:
@@ -173,7 +176,7 @@ Write `slides/index.html` linking all slides.
 - No slide is a grid of outlined boxes
 - Consecutive slides use different page architectures
 
-#### Empty-space red flags — detect and fix before converting
+#### Empty-space & image alignment red flags — detect and fix before converting
 
 | Pattern | Symptom | Fix |
 |---------|---------|-----|
@@ -183,6 +186,16 @@ Write `slides/index.html` linking all slides.
 | PI portrait < 180px natural width displayed at CSS 120px+ | Blurry portrait in PPTX | Max CSS size = `round(natural_px / 2)` at `deviceScaleFactor:2`; fill remaining space with stat chips or award doc |
 | Narrow column (≤200px) with portrait + sparse text | Bottom half empty | Add fact chips: 총 인원, 연구기간, 특허 건수, etc. |
 | Cert/doc image inside a tall `flex:1` container with `object-fit:contain` | Image floats in the middle of an empty box | Use `width:100%; height:auto` + `align-items:flex-start` on the parent |
+|| `margin-top:auto` on image at bottom of column | Image snaps to corner with large empty gap above | Remove `margin-top:auto`; add a highlight box or metric row before the image |
+|| Fixed small px size on cert/award image (e.g. `width:52px; height:66px`) | Tiny thumbnail lost in whitespace | Use `width:100%; height:auto` — container width controls the size |
+|| `<img>` has no explicit `width` inside a flex column | Renders at natural pixel size — may be tiny or invisible | Always set `width:100%; height:auto; object-fit:contain` on every slide image |
+
+> **QA checklist — run after every screenshot pass:**
+> 1. Is any image smaller than 25% of its surrounding column width? → enlarge
+> 2. Is any image stuck to a corner (top-left, bottom-left, bottom-right)? → fix container alignment
+> 3. Is there a visible blank area larger than ~80px tall or wide with nothing in it? → add fill content or move image up
+> 4. Do all cert/doc images span the full column width? → `width:100%` if not
+> 5. Check slide visually — if anything looks misaligned or unprofessional, fix it before converting
 
 #### Pre-built fill elements
 
@@ -238,6 +251,13 @@ node scripts/html_to_pptx.mjs slides/ presentation.pptx
 ### Step 6 — Image QA (mandatory)
 
 Render slides to screenshots and run the checklist in `references/figures.md` Step D. Fix → reconvert → recheck. Never skip.
+
+**Also check visual layout — not just content:**
+- Every image fills its container. No image is tiny, cropped into a corner, or floating with dead space around it.
+- No blank area larger than ~80px with no content.
+- Cert/doc images use `width:100%; height:auto` — never fixed small px dimensions.
+- Remove any `margin-top:auto` that pushes an image to the bottom of a column.
+- If a screenshot looks bad (misaligned, unprofessional, image in corner), fix the HTML and reconvert before delivering.
 
 ---
 
