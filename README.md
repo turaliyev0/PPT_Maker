@@ -198,4 +198,4 @@ puppeteer      # headless Chrome for HTML → image → PPTX
 
 ## License
 
-MIT
+MIT © 2026 Tural Aliyev — AVDC Lab
