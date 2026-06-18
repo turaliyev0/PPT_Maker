@@ -150,5 +150,8 @@ Do not deliver until the full QA checklist in `steps/step2-images.md` Step D pas
 |--------|------|
 | `scripts/extract_hwp_text.py` | HWP → text + embedded images |
 | `scripts/parse_hwp.py` | text → `slide_plan` JSON |
-| `scripts/build_html_from_plan.py` | Optional content scaffold — not final design |
+| `scripts/extract_pdf.py` | PDF → text + embedded images (alternative input) |
+| `scripts/extract_pdf_images.py` | PDF → embedded images only |
+| `scripts/build_html_from_plan.py` | Optional content scaffold — not final design (uses `html_slides.py`) |
+| `scripts/html_slides.py` | Slide scaffolding engine used by `build_html_from_plan.py` |
 | `scripts/html_to_pptx.mjs` | HTML slides → PPTX |
