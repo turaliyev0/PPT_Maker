@@ -22,7 +22,7 @@ HTML-first is required (1280×720 inline CSS) before PPTX. No direct python-pptx
 
 1. **Facts from HWP only** — do not invent names, patents, stats, orgs, or photos
 2. **1280×720 HTML** before conversion
-3. **Images:** bindata from HWP + any user-provided images (see Step 2). Never leave large blank areas
+3. **Images:** bindata from HWP + any user-provided images (see Step 2). Never leave large blank areas. **Each image may appear on exactly one slide — never reuse the same file twice across the deck.**
 4. **Important information only** — cut repetition; merge related sections. Target **12–18 slides**
 5. **No empty-looking slides** — redesign (bigger type, cards, diagram, stat row) or fold into another slide
 6. **No boxed-section scaffold** — white canvas, one focal element, ≤ 1 tinted surface per slide
@@ -170,7 +170,7 @@ Write `slides/index.html` linking all slides.
 #### Quality pass before converting
 
 - Titles and body text readable at presentation distance
-- No duplicate bindata images (track which `BIN*.png` you used)
+- **One image = one slide** — each `BIN*.png` / `BIN*.bmp` file may appear on exactly **one** slide in the entire deck. Keep a running list as you write each slide and never reuse an image already placed elsewhere.
 - Slides feel visually distinct, not copy-pasted CSS
 - **Every slide looks intentionally full** — no large dead zones
 - No slide is a grid of outlined boxes
