@@ -227,84 +227,114 @@ def slide_method_roles(d: dict) -> str:
     return page("연구개발 방법 및 기관별 역할", body, css)
 
 
-# ── 04 Capability 경안 — diagram bleed + stats ───────────────────────────────
+# ── 04 Capability 경안 — 3-col PI + certs ───────────────────────────────────
 def slide_capability_kyung(org: dict, title: str) -> str:
-    team = f" · {org['team']}" if org.get("team") else ""
     css = """
-.wrap { display: grid; grid-template-columns: 460px 1fr; height: 720px; }
-.visual {
-  background: linear-gradient(160deg, #0f2d4a, #1F4E79);
-  display: flex; flex-direction: column; justify-content: center; padding: 32px 24px;
-}
-.visual .role { font-size: 12px; font-weight: 700; color: #8ec5f0; letter-spacing: .14em; margin-bottom: 10px; }
-.visual h2 { font-size: 20px; font-weight: 800; color: #fff; margin-bottom: 16px; line-height: 1.4; }
-.visual img { width: 100%; max-height: 420px; object-fit: contain; }
-.content { padding: 40px 52px 40px 36px; display: flex; flex-direction: column; }
-.pi { font-size: 20px; font-weight: 800; color: #1F4E79; margin-bottom: 20px; }
-.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 22px; }
-.st { background: #E8F4FC; border-radius: 10px; padding: 16px 12px; text-align: center; }
-.st .n { font-size: 36px; font-weight: 800; color: #1F4E79; line-height: 1; }
-.st .l { font-size: 13px; color: #475569; margin-top: 6px; line-height: 1.3; }
-.cols { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; min-height: 0; }
-.sec { font-size: 14px; font-weight: 700; color: #1F4E79; margin-bottom: 8px; }
+.wrap { display: grid; grid-template-columns: 220px 1fr 250px; height: 720px; padding: 36px 48px 32px; gap: 24px; }
+.col-pi { display: flex; flex-direction: column; gap: 10px; }
+.col-pi img.portrait { width: 73px; height: auto; border-radius: 6px; border: 1px solid #dde2ea; }
+.pi-name { font-size: 17px; font-weight: 800; color: #1F4E79; line-height: 1.35; }
+.pi-meta { font-size: 13px; color: #6b7280; line-height: 1.5; }
+.chip { font-size: 12px; background: #eef4fb; border-radius: 6px; padding: 8px 10px; text-align: center; }
+.chip b { display: block; font-size: 18px; color: #1F4E79; }
+.col-main { display: flex; flex-direction: column; min-height: 0; }
+.col-main h1 { font-size: 22px; font-weight: 800; color: #16181d; margin: 6px 0 12px; line-height: 1.35; }
+.stats { display: flex; gap: 10px; margin-bottom: 12px; flex-shrink: 0; }
+.stats span { flex: 1; font-size: 13px; color: #475569; padding: 8px 0; border-top: 2px solid #1F4E79; }
+.stats b { color: #1F4E79; }
+.sec { font-size: 14px; font-weight: 700; color: #1F4E79; margin-bottom: 6px; }
+.certs { border-top: 1px solid #dde2ea; padding-top: 10px; margin-top: auto; flex-shrink: 0; }
+.certs p { font-size: 10px; font-weight: 700; letter-spacing: .12em; color: #2E75B6; margin-bottom: 6px; }
+.cert-row { display: flex; gap: 8px; }
+.cert-row img { flex: 1; width: 100%; height: 120px; object-fit: contain; border: 1px solid #dde2ea; border-radius: 4px; background: #fff; }
+.col-pat { display: flex; flex-direction: column; min-height: 0; }
 """
     body = f"""
 <div class="wrap">
-  <div class="visual">
-    <div class="role">주관 · AI 냉각 제어</div>
-    <h2>액침냉각 시스템<br>설계·제작 역량</h2>
-    <img src="{IMG}/BIN0008.png" alt="AI 통합 냉각 제어">
+  <div class="col-pi">
+    <div class="kicker">주관</div>
+    <img class="portrait" src="{IMG}/BIN0020.bmp" alt="엄상수 총괄책임">
+    <div class="pi-name">엄상수<br><span style="font-size:13px;font-weight:600">총괄책임</span></div>
+    <div class="pi-meta">경안써머텍 대표<br>석사/전자공학</div>
+    <div class="chip"><b>12</b>총 인원</div>
+    <div class="chip"><b>40+</b>년 제작 경험</div>
+    <div class="chip"><b>5</b>특허 출원</div>
+    <img src="{IMG}/BIN0017.bmp" alt="산업자원부 장관상 표창" style="width:100%;height:auto;margin-top:6px;border:1px solid #c8d9ec;border-radius:4px">
   </div>
-  <div class="content">
+  <div class="col-main">
     <div class="kicker">책임자 역량</div>
-    <div class="pi">{e(org['pi'])}{e(team)}</div>
+    <h1>데이터센터 액침냉각 시스템 설계·제작</h1>
     <div class="stats">
-      <div class="st"><div class="n">40+</div><div class="l">년 압력용기·열교환</div></div>
-      <div class="st"><div class="n">CE</div><div class="l">ASME 인증</div></div>
-      <div class="st"><div class="n">5</div><div class="l">특허 출원</div></div>
+      <span><b>CE PED</b> · ASME U/UM</span>
+      <span><b>IoT</b> 스마트 제어</span>
+      <span><b>다품종</b> 용접 자동화</span>
     </div>
-    <div class="cols">
-      <div><div class="sec">주요 이력</div><ul class="body">{''.join(f'<li>{e(h)}</li>' for h in org['history'][:5])}</ul></div>
-      <div><div class="sec">지식재산권</div>{patents_table(org, 4)}</div>
+    <div class="sec">주요 역량</div>
+    <ul class="body" style="font-size:15px">{''.join(f'<li>{e(h)}</li>' for h in org['history'][:6])}</ul>
+    <div style="flex:1;background:#f0f5fb;border-radius:10px;padding:12px;display:flex;align-items:center;justify-content:center;margin:10px 0;min-height:0">
+      <img src="{IMG}/BIN0008.png" alt="AI 통합 냉각 제어" style="width:100%;height:auto;max-height:180px;object-fit:contain">
     </div>
+    <div class="certs">
+      <p>보유 국제 인증서 (원본)</p>
+      <div class="cert-row">
+        <img src="{IMG}/BIN001D.bmp" alt="ASME CE PED UL 인증">
+      </div>
+    </div>
+  </div>
+  <div class="col-pat">
+    <div class="sec">지식재산권</div>
+    {patents_table(org, 5)}
   </div>
 </div>
 """
     return page(title, body, css)
 
 
-# ── 05 Capability 인하대 — CFD diagram bleed right ───────────────────────────
+# ── 05 Capability 인하대 — split + award doc ─────────────────────────────────
 def slide_capability_inha(org: dict, title: str) -> str:
-    team = f" · {org['team']}" if org.get("team") else ""
+    css = """
+.wrap { display: grid; grid-template-columns: 220px 1fr 480px; height: 720px; padding: 36px 48px; gap: 24px; }
+.col-pi img { width: 71px; height: auto; border-radius: 6px; border: 1px solid #dde2ea; }
+.pi-name { font-size: 17px; font-weight: 800; color: #1F4E79; margin: 8px 0 4px; line-height: 1.35; }
+.pi-meta { font-size: 13px; color: #6b7280; line-height: 1.5; margin-bottom: 10px; }
+.chip { font-size: 12px; background: #eef4fb; border-radius: 6px; padding: 8px; text-align: center; margin-bottom: 8px; }
+.chip b { display: block; font-size: 18px; color: #1F4E79; }
+.col-main h1 { font-size: 21px; font-weight: 800; margin: 6px 0 14px; line-height: 1.35; }
+.tl { display: flex; gap: 10px; margin-bottom: 8px; }
+.tl .dot { width: 8px; height: 8px; background: #2E75B6; border-radius: 50%; margin-top: 7px; flex-shrink: 0; }
+.tl p { font-size: 15px; line-height: 1.45; }
+.visual { display: flex; flex-direction: column; gap: 10px; }
+.panel { background: #f0f5fb; border-radius: 10px; padding: 14px; flex: 1; display: flex; align-items: center; justify-content: center; min-height: 0; }
+.panel img { width: 100%; height: auto; object-fit: contain; }
+.award img { width: 100%; height: auto; border: 1px solid #c8d9ec; border-radius: 4px; }
+.award p { font-size: 10px; color: #9ca3af; text-align: center; margin-top: 4px; }
+"""
     items = "".join(
         f'<div class="tl"><div class="dot"></div><p>{e(h)}</p></div>'
         for h in org["history"][:5]
     )
-    css = """
-.wrap { display: grid; grid-template-columns: 1fr 500px; height: 720px; }
-.content { padding: 44px 36px 44px 64px; display: flex; flex-direction: column; }
-.pi { font-size: 20px; font-weight: 800; color: #1F4E79; margin-bottom: 18px; line-height: 1.4; }
-.tl { display: flex; gap: 12px; margin-bottom: 10px; }
-.tl .dot { width: 10px; height: 10px; background: #2E75B6; border-radius: 50%; margin-top: 7px; flex-shrink: 0; }
-.tl p { font-size: 15px; line-height: 1.48; }
-.visual {
-  background: linear-gradient(180deg, #eef4fa 0%, #dce8f4 100%);
-  display: flex; flex-direction: column; justify-content: center; padding: 24px;
-}
-.visual .tag { font-size: 12px; font-weight: 700; color: #1F4E79; letter-spacing: .1em; margin-bottom: 12px; text-align: center; }
-.visual img { width: 100%; max-height: 580px; object-fit: contain; }
-"""
     body = f"""
 <div class="wrap">
-  <div class="content">
-    <div class="kicker">책임자 역량 · 위탁</div>
-    <div class="pi">{e(org['pi'])}{e(team)}</div>
+  <div class="col-pi">
+    <div class="kicker">위탁</div>
+    <img src="{IMG}/BIN0021.bmp" alt="이철희 교수">
+    <div class="pi-name">이철희 교수<br><span style="font-size:13px;font-weight:600">위탁총괄</span></div>
+    <div class="pi-meta">인하대 기계공학과<br>박사/기계공학</div>
+    <div class="chip"><b>5</b>총 인원</div>
+    <div class="chip"><b>CFD</b>·디지털트윈</div>
+  </div>
+  <div class="col-main">
+    <div class="kicker">책임자 역량</div>
+    <h1>열·유동 해석(CFD/FEM) 기반 구조 최적화</h1>
     {items}
-    <div style="margin-top:16px">{patents_table(org, 3)}</div>
+    <div style="margin-top:14px">{patents_table(org, 3)}</div>
   </div>
   <div class="visual">
-    <div class="tag">CFD · 디지털 트윈 해석</div>
-    <img src="{IMG}/BIN0007.png" alt="유체순환 운전조건 최적화">
+    <div class="panel"><img src="{IMG}/BIN0007.png" alt="유체순환 운전조건 최적화"></div>
+    <div class="award">
+      <img src="{IMG}/BIN001A.bmp" alt="이철희 교수 수상이력">
+      <p>수상·연구 실적 (HWP 원본)</p>
+    </div>
   </div>
 </div>
 """
@@ -364,44 +394,39 @@ def slide_capability_ktr(org: dict, title: str) -> str:
     return page(title, body, css)
 
 
-# ── 07 Capability 중경우전 — skill tags + patents ────────────────────────────
+# ── 07 Capability 중경우전 — welding robot + award ───────────────────────────
 def slide_capability_jung(org: dict, title: str) -> str:
-    skills = ["비전-레이저 용접선 추적", "로봇 자동용접", "다중 패스 용접", "결함 저감 공정", "압력용기 정밀 용접"]
+    skills = ["비전-레이저 용접선 추적", "로봇 자동용접", "다중 패스 용접", "결함 저감", "압력용기 정밀 용접"]
     tags = "".join(f'<span class="tag">{e(s)}</span>' for s in skills)
     css = """
-.wrap { display: flex; flex-direction: column; height: 720px; }
-.banner {
-  background: linear-gradient(90deg, #1F4E79, #2E75B6); padding: 32px 64px; color: #fff;
-}
-.banner .kicker { color: #a8cce8; margin-bottom: 8px; }
-.banner h1 { font-size: 24px; font-weight: 800; line-height: 1.4; }
-.body-wrap { flex: 1; padding: 28px 64px; display: grid; grid-template-columns: 1fr 1fr; gap: 36px; }
-.tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
-.tag { font-size: 14px; font-weight: 600; color: #1F4E79; background: #E8F4FC; padding: 8px 16px; border-radius: 24px; }
-.flow { display: flex; align-items: center; gap: 8px; margin-top: 20px; }
-.step { flex: 1; text-align: center; font-size: 13px; font-weight: 700; color: #1F4E79; padding: 12px 8px; background: #f4f7fb; border-radius: 8px; }
-.arrow { color: #2E75B6; font-weight: 800; font-size: 18px; }
+.wrap { display: grid; grid-template-columns: 1fr 420px; height: 720px; }
+.content { padding: 40px 36px 40px 64px; display: flex; flex-direction: column; }
+.content h1 { font-size: 22px; font-weight: 800; color: #1F4E79; margin: 8px 0 14px; line-height: 1.35; }
+.pi { font-size: 15px; color: #475569; margin-bottom: 14px; line-height: 1.5; }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.tag { font-size: 13px; font-weight: 600; color: #1F4E79; background: #E8F4FC; padding: 6px 14px; border-radius: 20px; }
+.visual { background: #0f2d4a; display: flex; flex-direction: column; padding: 28px 24px; gap: 14px; }
+.visual .panel { flex: 1; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,.04); border-radius: 10px; padding: 12px; min-height: 0; }
+.visual .panel img { width: 100%; height: auto; max-height: 280px; object-fit: contain; }
+.award img { width: 100%; height: auto; border: 1px solid rgba(255,255,255,.2); border-radius: 4px; }
+.award p { font-size: 10px; color: #8ec5f0; text-align: center; margin-top: 4px; }
 """
     body = f"""
 <div class="wrap">
-  <div class="banner">
+  <div class="content">
     <div class="kicker">책임자 역량 · 국제공동</div>
-    <h1>{e(org['pi'])}</h1>
+    <h1>비전-레이저 기반 용접선 추적 및 로봇 자동용접</h1>
+    <div class="pi">{e(org['pi'])}</div>
+    <div class="tags">{tags}</div>
+    <ul class="body" style="font-size:15px">{''.join(f'<li>{e(h)}</li>' for h in org['history'][:5])}</ul>
+    <div style="margin-top:auto">{patents_table(org, 4)}</div>
   </div>
-  <div class="body-wrap">
-    <div>
-      <div style="font-size:15px;font-weight:700;color:#1F4E79;margin-bottom:12px">핵심 공정기술</div>
-      <div class="tags">{tags}</div>
-      <ul class="body">{''.join(f'<li>{e(h)}</li>' for h in org['history'][:4])}</ul>
-      <div class="flow">
-        <div class="step">비전<br>센싱</div><div class="arrow">→</div>
-        <div class="step">경로<br>제어</div><div class="arrow">→</div>
-        <div class="step">용접<br>최적화</div><div class="arrow">→</div>
-        <div class="step">품질<br>검증</div>
-      </div>
+  <div class="visual">
+    <div class="panel"><img src="{IMG}/BIN0006.bmp" alt="원주형 용접 로봇"></div>
+    <div class="award">
+      <img src="{IMG}/BIN0025.png" alt="Rui Li 교수 수상 실적">
+      <p>重庆市科学技术奖 一等奖 · Rui Li</p>
     </div>
-    <div><div style="font-size:15px;font-weight:700;color:#1F4E79;margin-bottom:10px">지식재산권 (중국 등록)</div>
-      {patents_table(org, 5)}</div>
   </div>
 </div>
 """
@@ -459,7 +484,13 @@ def slide_intl_combined(d: dict) -> str:
   <div class="stats">{stats}</div>
   <div class="lower">
     <ul class="body">{bullets}</ul>
-    <div class="timeline">{tl}</div>
+    <div>
+      <div class="timeline">{tl}</div>
+      <div style="margin-top:16px;background:#f4f7fb;border-radius:8px;padding:10px">
+        <img src="{IMG}/BIN001F.bmp" alt="국제공동연구계약서" style="width:100%;height:auto;max-height:140px;object-fit:contain">
+        <p style="font-size:10px;color:#9ca3af;text-align:center;margin-top:4px">국제공동연구 계약서 (HWP 원본)</p>
+      </div>
+    </div>
   </div>
 </div>
 """

@@ -52,30 +52,7 @@ See `references/visual-design.md` and `references/html-slides.md` for inspiratio
 
 ### Step 0 — Bootstrap (run once per session)
 
-#### 0-A. Pull latest workflow updates
-
-The canonical workflow lives at `https://github.com/turaliyev0/PPT_Maker.git`. Always pull before starting so you work with the latest scripts, references, and `WORKFLOW.md`.
-
-```bash
-# Always pull using the direct URL — do NOT rely on a named remote
-# (the remote may be named "origin", "orign", or anything else depending on the device)
-git pull https://github.com/turaliyev0/PPT_Maker.git main
-# if that fails, try master branch:
-git pull https://github.com/turaliyev0/PPT_Maker.git master
-
-# If the project folder is NOT a PPT_Maker clone (e.g. first-time setup),
-# clone into a sibling folder and copy scripts + references across:
-git clone https://github.com/turaliyev0/PPT_Maker.git _pptmaker_latest
-xcopy /E /I /Y _pptmaker_latest\scripts scripts
-xcopy /E /I /Y _pptmaker_latest\references references
-xcopy /E /I /Y _pptmaker_latest\templates templates
-copy /Y _pptmaker_latest\WORKFLOW.md WORKFLOW.md
-rmdir /S /Q _pptmaker_latest
-```
-
-> If `git pull` fails (no remote, offline, auth error) — log the error, skip this step, and continue with the local copy. Never block the workflow on a network error.
-
-#### 0-B. Verify Python
+#### 0-A. Verify Python
 
 ```bash
 python --version
